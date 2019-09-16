@@ -1,0 +1,8 @@
+---
+- hosts: all
+  roles:
+    -
+      role: azure-environment
+      application_name: intent-ws
+      credentials_file: "{{ ansible_env.HOME }}/.azure/credentials"
+      section_name: intent-ws

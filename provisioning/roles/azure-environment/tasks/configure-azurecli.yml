@@ -1,0 +1,49 @@
+---
+- name: Get subscription
+  set_fact:
+    subscription_id: >-
+      {{
+        lookup('ini',
+          'subscription_id
+          section={{ section_name }}
+          file={{ credentials_file }}') | trim
+      }}
+
+- name: Get client_id
+  set_fact:
+    client_id: >-
+      {{
+        lookup('ini',
+          'client_id
+          section={{ section_name }}
+          file={{ credentials_file }}') | trim
+      }}
+
+- name: Get secret
+  set_fact:
+    secret: >-
+      {{
+        lookup('ini',
+          'secret
+          section={{ section_name }}
+          file={{ credentials_file }}') | trim
+      }}
+
+- name: Get tenant
+  set_fact:
+    tenant: >-
+      {{
+        lookup('ini',
+          'tenant
+          section={{ section_name }}
+          file={{ credentials_file }}') | trim
+      }}
+
+- name: Set environment
+  become: yes
+  template:
+    src: profile.j2
+    dest: "/etc/profile.d/{{ application_name }}.sh"
+    owner: root
+    group: root
+    mode: "0644"
